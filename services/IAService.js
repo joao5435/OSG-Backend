@@ -27,7 +27,11 @@ export async function perguntarIA(mensagem) {
     return response.data.choices[0].message.content;
 
   } catch (error) {
-    console.error("Erro ao chamar a IA:", error.response?.data || error);
-    return "Erro ao processar sua solicitação.";
+  if (error.response) {
+    console.error("OpenRouter retornou erro:", error.response.status, error.response.data);
+  } else {
+    console.error("Erro de requisição:", error.message);
   }
+  return "Erro ao processar sua solicitação.";
+}
 }
