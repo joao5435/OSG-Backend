@@ -1,32 +1,11 @@
-import axios from "axios";
-import dotenv from "dotenv";
+import api from "./api";
 
-dotenv.config();
-
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-
-export async function perguntarIA(message) {
+export async function enviarMensagemParaIA(mensagem) {
   try {
-    const response = await axios.post(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        model: "gpt-4o-mini", 
-        messages: [
-          { role: "system", content: "Responda de forma clara e objetiva." },
-          { role: "user", content: message }
-        ]
-      },
-      {
-        headers: {
-          "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-        }
-      }
-    );
-
-    return response.data.choices[0].message.content;
+    const resposta = await api.post("/duelo/enviar", { mensagem });
+    return resposta.data.resposta;
   } catch (error) {
-    console.error("Erro ao chamar a IA:", error.response?.data || error);
-    return "Erro ao processar sua solicitação.";
+    console.error("Erro ao enviar mensagem:", error);
+    return "Erro ao conectar com a IA.";
   }
 }
