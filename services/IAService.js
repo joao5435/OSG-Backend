@@ -44,6 +44,6 @@ export async function perguntarIA(mensagem) {
       // Outro erro
       console.error("Erro configurando a requisição:", error.message);
     }
-    return "Erro ao processar sua solicitação.";
+   return error.response?.data || error.message || "Erro desconhecido";
   }
 }
