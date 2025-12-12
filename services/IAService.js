@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+
 export async function enviarMensagemParaIA(mensagem) {
   try {
     const response = await axios.post(
